@@ -1,6 +1,6 @@
-# 💻 PenWeb CLI
+# 💻 WebSec CLI
 
-Web pentesting toolkit, GPS tracker, annonymous Email and free VPN, all in an easy-to-use CLI. A comprehensive security testing toolkit with integrated CLI utilities for penetration testing, privacy tools, and AWS Lambda functions for URL monitoring.
+Web security & pentesting toolkit, GPS tracker, annonymous Email and free VPN, all in an easy-to-use CLI. A comprehensive security testing toolkit with integrated CLI utilities for penetration testing, privacy tools, and AWS Lambda functions for URL monitoring.
 
 ## Overview
 
