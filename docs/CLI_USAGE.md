@@ -1,4 +1,4 @@
-# Blue-Yellow CLI Usage Guide
+# PenWeb CLI Usage Guide
 
 ## Starting the CLI
 
@@ -21,9 +21,39 @@ python3 src/main.py
 
 ## CLI Features
 
-The Blue-Yellow CLI provides an interactive menu with 4 pentesting utilities:
+The PenWeb CLI provides an interactive menu with 7 integrated tools (3 defensive, 2 utility, 2 offensive):
 
-### 🌐 [1] Ping URL
+### 🛰️ [1] GPS (DEFENSIVE)
+Device location tracking with multi-provider support.
+
+**Default:** Uses free Traccar demo server with IP-based geolocation - NO hardware or account required!
+
+**Use Cases:**
+- Track device location
+- Fleet management
+- Personal location history
+
+### 🔐 [2] VPN (DEFENSIVE)
+Multi-provider VPN manager.
+
+**Default:** Uses free VPNGate public servers - NO account required!
+
+**Use Cases:**
+- Privacy protection
+- Bypass geo-restrictions
+- Secure public WiFi usage
+
+### 📧 [3] Email
+Temporary email address manager.
+
+**Default:** Uses free 1secmail API - NO account required!
+
+**Use Cases:**
+- Privacy protection for online registrations
+- Testing email workflows
+- Avoid spam
+
+### 🌐 [4] Ping URL
 Test URL availability and measure response time.
 
 **Use Case:**
@@ -32,11 +62,11 @@ Test URL availability and measure response time.
 - Validate endpoint accessibility
 
 **Example Flow:**
-1. Select option `1`
+1. Select option `4`
 2. Enter target URL (e.g., `https://example.com`)
 3. View status code and response time
 
-### 📋 [2] Clone Website
+### 📋 [5] Clone Website
 Download website HTML, CSS, and JavaScript files for offline analysis.
 
 **Use Case:**
@@ -45,12 +75,12 @@ Download website HTML, CSS, and JavaScript files for offline analysis.
 - Study website structure
 
 **Example Flow:**
-1. Select option `2`
+1. Select option `5`
 2. Enter website URL
-3. Specify output directory (default: `cloned_site`)
+3. Specify output directory (default: `.output/cloned_site`)
 4. Wait for download to complete
 
-### 💥 [3] DDoS Test (OFFENSIVE)
+### 💥 [6] DDoS Test (OFFENSIVE)
 Test rate limiting by making repeated requests to a URL.
 
 **⚠️ WARNING:** This is an offensive tool. Only use on systems you own or have explicit permission to test.
@@ -61,7 +91,7 @@ Test rate limiting by making repeated requests to a URL.
 - Stress test endpoint capacity
 
 **Example Flow:**
-1. Select option `3`
+1. Select option `6`
 2. Confirm authorization
 3. Enter target URL
 4. Set request interval (e.g., `0.5` seconds)
@@ -75,7 +105,7 @@ Test rate limiting by making repeated requests to a URL.
 - Final blocking status
 - Error messages
 
-### 🔐 [4] Login Test (OFFENSIVE)
+### 🔐 [7] Login Test (OFFENSIVE)
 Test login form security by attempting credential combinations.
 
 **⚠️ WARNING:** This is an offensive tool. Only use on systems you own or have explicit permission to test.
@@ -87,7 +117,7 @@ Test login form security by attempting credential combinations.
 - Security audit compliance
 
 **Example Flow:**
-1. Select option `4`
+1. Select option `7`
 2. Confirm authorization
 3. Enter login page URL
 4. Provide email addresses (comma-separated):
@@ -109,7 +139,7 @@ Test login form security by attempting credential combinations.
 
 ## Navigation
 
-- **Select option:** Enter number `0-4`
+- **Select option:** Enter number `0-7`
 - **Cancel input:** Press `Ctrl+C`
 - **Exit program:** Select option `0` or press `Ctrl+C`
 
@@ -142,16 +172,16 @@ Test login form security by attempting credential combinations.
 If you get module import errors:
 ```bash
 # Make sure you're in the project root
-cd /home/kali/labs/blue-yellow
+cd /home/quantium/labs/websec
 
 # Install dependencies
-poetry install --no-root
+poetry install
 ```
 
 ### Dependencies Missing
 If tools fail with missing dependencies:
 ```bash
-poetry install --no-root
+poetry install
 ```
 
 ### Permission Issues
@@ -164,22 +194,22 @@ chmod +x run.sh
 
 ### Example 1: Quick Ping Test
 ```
-Select option: 1
+Select option: 4
 Enter URL to ping: https://google.com
 Result: Status 200, 45ms response time
 ```
 
 ### Example 2: Clone a Simple Website
 ```
-Select option: 2
+Select option: 5
 Enter website URL: https://example.com
-Output directory: example_clone
+Output directory: (press Enter for default .output/cloned_site)
 Result: Downloaded 5 files (1 HTML, 2 CSS, 2 JS)
 ```
 
 ### Example 3: Test Rate Limiting
 ```
-Select option: 3
+Select option: 6
 Authorization confirmed: yes
 Enter URL: https://api.mysite.com/endpoint
 Request interval: 0.5
@@ -189,7 +219,7 @@ Result: Blocked after 47 requests with 429 status code
 
 ### Example 4: Test Login Security
 ```
-Select option: 4
+Select option: 7
 Authorization confirmed: yes
 Enter login URL: https://mysite.com/login
 Emails: admin@mysite.com, test@mysite.com
@@ -229,14 +259,14 @@ Result: Blocked after 15 attempts, CAPTCHA triggered
 ## Support
 
 For issues or questions:
-1. Check the main [README.md](README.md)
-2. Review [SETUP.md](SETUP.md) for installation help
-3. Check linter for code issues: `poetry run flake8 src/`
+1. Check the main [README.md](../README.md)
+2. Review [docs/CLI_SETUP.md](CLI_SETUP.md) for installation help
+3. Open an issue on [GitHub](https://github.com/alexcolls/websec/issues)
 
 ## Version
 
-Current Version: **v1.0**
-Last Updated: October 2025
+Current Version: **v0.3.1**
+Last Updated: November 2025
 
 ---
 
