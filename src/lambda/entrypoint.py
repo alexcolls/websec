@@ -7,11 +7,23 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 try:
-    from utils.ping import ping_url
+    from services.ping import ping_url
+    from services.clone import clone_website
+    from services.d2 import make_requests_until_blocked
+    from services.attempt_login import attempt_credential_combinations
 except ImportError:
-    # For testing purposes, create a mock ping function
+    # For testing purposes, create mock functions
     def ping_url(url: str) -> dict:
         return {"status_code": 200, "response_time_ms": 100}
+    
+    def clone_website(url: str, output_dir: str = None) -> bool:
+        return True
+    
+    def make_requests_until_blocked(url: str, **kwargs) -> dict:
+        return {"success_count": 10, "total_attempts": 10, "blocked": False}
+    
+    def attempt_credential_combinations(url: str, **kwargs) -> dict:
+        return {"attempts": 5, "blocked": False, "successful": False}
 
 from lib import instruction_parser, extract_message_metadata, create_response
 
@@ -154,40 +166,94 @@ def execute_action(url: str, action: str, message_id: str) -> Dict[str, Any]:
             }
         
         elif action == 'clone':
-            # TODO: Implement clone functionality
-            # For now, return a placeholder
-            return {
-                'success': True,
-                'data': {
-                    'message': 'Clone functionality not yet implemented',
-                    'url': url
-                },
-                'error': None
-            }
+            # Clone website functionality
+            try:
+                success = clone_website(url, output_dir='/tmp/cloned_sites')
+                if success:
+                    return {
+                        'success': True,
+                        'data': {
+                            'message': 'Website cloned successfully',
+                            'url': url,
+                            'output_dir': '/tmp/cloned_sites'
+                        },
+                        'error': None
+                    }
+                else:
+                    return {
+                        'success': False,
+                        'data': None,
+                        'error': 'Failed to clone website'
+                    }
+            except Exception as e:
+                return {
+                    'success': False,
+                    'data': None,
+                    'error': f'Clone error: {str(e)}'
+                }
         
         elif action == 'ddos':
-            # TODO: Implement DDoS functionality (for testing purposes only)
-            # For now, return a placeholder
-            return {
-                'success': True,
-                'data': {
-                    'message': 'DDoS functionality not yet implemented',
-                    'url': url
-                },
-                'error': None
-            }
+            # Rate limit testing functionality (for authorized testing only)
+            try:
+                result = make_requests_until_blocked(
+                    url=url,
+                    period=1.0,
+                    max_attempts=50,
+                    randomize_params=True,
+                    verbose=False
+                )
+                return {
+                    'success': True,
+                    'data': {
+                        'message': 'Rate limit test completed',
+                        'url': url,
+                        'success_count': result['success_count'],
+                        'total_attempts': result['total_attempts'],
+                        'blocked': result['blocked'],
+                        'status_code': result.get('status_code')
+                    },
+                    'error': None
+                }
+            except Exception as e:
+                return {
+                    'success': False,
+                    'data': None,
+                    'error': f'DDoS test error: {str(e)}'
+                }
         
         elif action == 'attempt_login':
-            # TODO: Implement login attempt functionality
-            # For now, return a placeholder
-            return {
-                'success': True,
-                'data': {
-                    'message': 'Login attempt functionality not yet implemented',
-                    'url': url
-                },
-                'error': None
-            }
+            # Login security testing functionality (for authorized testing only)
+            try:
+                # Default test credentials - in production, these should come from message
+                emails = ['admin@test.com', 'user@test.com']
+                keywords = ['password', 'admin']
+                
+                result = attempt_credential_combinations(
+                    url=url,
+                    emails=emails,
+                    keywords=keywords,
+                    delay=1.0,
+                    max_attempts=20,
+                    verbose=False
+                )
+                return {
+                    'success': True,
+                    'data': {
+                        'message': 'Login security test completed',
+                        'url': url,
+                        'attempts': result['attempts'],
+                        'blocked': result['blocked'],
+                        'successful': result['successful'],
+                        'working_credentials_count': len(result.get('working_credentials', []))
+                    },
+                    'error': None
+                }
+            except Exception as e:
+                return {
+                    'success': False,
+                    'data': None,
+                    'error': f'Login test error: {str(e)}'
+                }
         
         else:
             return {
