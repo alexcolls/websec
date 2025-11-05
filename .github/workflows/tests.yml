@@ -1,0 +1,76 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Cache Poetry dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/pypoetry
+          .venv
+        key: ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-poetry-${{ matrix.python-version }}-
+          ${{ runner.os }}-poetry-
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+    - name: Configure Poetry
+      run: |
+        poetry config virtualenvs.in-project true
+
+    - name: Install dependencies
+      run: |
+        poetry install
+
+    - name: Run Black (formatting check)
+      run: |
+        poetry run black --check src/ test/
+
+    - name: Run Flake8 (linting)
+      run: |
+        poetry run flake8 src/ test/ --max-line-length=100 --extend-ignore=E203,W503
+
+    - name: Run Mypy (type checking)
+      run: |
+        poetry run mypy src/ --ignore-missing-imports || true
+
+    - name: Run tests with pytest
+      run: |
+        poetry run pytest test/ -v --tb=short -m "not network"
+
+    - name: Run tests with coverage
+      if: matrix.python-version == '3.11'
+      run: |
+        poetry run pytest test/ --cov=src --cov-report=xml --cov-report=html -m "not network"
+
+    - name: Upload coverage reports
+      if: matrix.python-version == '3.11'
+      uses: codecov/codecov-action@v3
+      with:
+        files: ./coverage.xml
+        fail_ci_if_error: false
