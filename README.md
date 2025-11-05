@@ -1,6 +1,14 @@
 # 💻 WebSec CLI
 
-Web security & pentesting toolkit, GPS tracker, annonymous Email and free VPN, all in an easy-to-use CLI. A comprehensive security testing toolkit with integrated CLI utilities for penetration testing, privacy tools, and AWS Lambda functions for URL monitoring.
+[![Version](https://img.shields.io/badge/version-0.3.1-blue.svg)](https://github.com/alexcolls/websec/releases)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Tests](https://github.com/alexcolls/websec/actions/workflows/tests.yml/badge.svg)](https://github.com/alexcolls/websec/actions)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+Web security & pentesting toolkit, GPS tracker, anonymous Email and free VPN, all in an easy-to-use CLI. A comprehensive security testing toolkit with integrated CLI utilities for penetration testing, privacy tools, and AWS Lambda functions for URL monitoring.
+
+📖 **[Contributing](CONTRIBUTING.md)** | 🔒 **[Security](SECURITY.md)** | 🤝 **[Code of Conduct](CODE_OF_CONDUCT.md)**
 
 ## Overview
 

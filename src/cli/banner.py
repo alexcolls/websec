@@ -11,7 +11,7 @@ BANNER = """
 ║         ╚═╝     ╚══════╝╚═╝  ╚═══╝ ╚══╝╚══╝ ╚══════╝╚═════╝              ║
 ║                                                                          ║
 ║                  Website Penetration Testing Toolkit                     ║
-║                      v1.0 - Security Testing Suite                       ║
+║                    v0.3.1 - Security Testing Suite                       ║
 ║                                                                          ║
 ╚══════════════════════════════════════════════════════════════════════════╝
 """

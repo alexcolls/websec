@@ -7,6 +7,77 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2025-11-05
+
+### Added
+- **Complete Documentation Suite**
+  - Added `CONTRIBUTING.md` with comprehensive contribution guidelines
+  - Added `SECURITY.md` with security policy and vulnerability reporting process
+  - Added `CODE_OF_CONDUCT.md` based on Contributor Covenant 2.1
+  - All documentation includes proper formatting, examples, and clear guidelines
+
+- **Testing Infrastructure**
+  - Added `pytest.ini` configuration file with test markers and coverage settings
+  - Created proper pytest structure with `test/__init__.py` and `test/unit/__init__.py`
+  - Added unit tests for ping service (`test/unit/test_ping.py`)
+  - Tests support markers: unit, integration, e2e, slow, network
+
+- **CI/CD Pipeline**
+  - Added GitHub Actions workflow (`.github/workflows/tests.yml`)
+  - Automated testing on Python 3.9, 3.10, and 3.11
+  - Runs Black formatting check, Flake8 linting, and Mypy type checking
+  - Includes test coverage reporting with Codecov integration
+  - Poetry dependency caching for faster builds
+
+- **Lambda Functionality Complete**
+  - Implemented `clone` action using `clone_website` function
+  - Implemented `ddos` action using `make_requests_until_blocked` function  
+  - Implemented `attempt_login` action using `attempt_credential_combinations` function
+  - Added `src/lambda/lib.py` with helper functions (instruction_parser, extract_message_metadata, create_response)
+  - All actions include proper error handling and detailed response data
+
+### Changed
+- **Version Alignment**
+  - Updated `pyproject.toml` version from 0.2.0 to 0.3.1
+  - Updated `src/cli/banner.py` version display from v1.0 to v0.3.1
+  - Updated author information to Alex Colls
+
+- **Documentation Fixes**
+  - Updated `docs/CLI_USAGE.md` from "Blue-Yellow" to "PenWeb"
+  - Documented all 7 tools (GPS, VPN, Email, Ping, Clone, DDoS, Login)
+  - Fixed all example option numbers (1-7 instead of 1-4)
+  - Updated navigation to reflect 0-7 options
+  - Fixed paths from `/home/kali/labs/blue-yellow` to `/home/quantium/labs/websec`
+  - Changed version reference from v1.0 to v0.3.1
+  - Updated last modified date to November 2025
+
+- **README Enhancements**
+  - Added badges for version, license, Python version, tests, and code style
+  - Added prominent links to CONTRIBUTING.md, SECURITY.md, and CODE_OF_CONDUCT.md
+  - Fixed typo: "annonymous" → "anonymous"
+  - All badges link to appropriate resources
+
+### Fixed
+- **Lambda Implementation**
+  - Removed all TODO placeholders
+  - Fixed import paths to use `services` instead of `utils`
+  - Added comprehensive error handling for all actions
+  - Clone action now properly uses `/tmp/cloned_sites` output directory for Lambda
+  - DDoS action includes configurable parameters (period, max_attempts)
+  - Login test action includes default credentials and max attempts limit
+
+- **Project Structure**
+  - Created missing `src/lambda/lib.py` module
+  - Added proper test directory structure
+  - All imports now use correct paths
+
+### Technical Details
+- Lambda now supports 4 actions: `ping`, `clone`, `ddos`, `attempt_login`
+- Test infrastructure uses pytest with markers for test categorization
+- CI/CD workflow caches Poetry dependencies for 30%+ faster builds
+- All new code follows Black formatting (100 char line length)
+- Documentation follows consistent markdown formatting
+
 ## [0.3.1] - 2025-10-02
 
 ### Added
